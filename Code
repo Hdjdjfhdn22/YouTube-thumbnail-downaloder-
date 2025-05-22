@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Thumbnail Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Baloo Bhai 2', cursive;
+      background: #f8f8ff;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #e91e63;
+      text-align: center;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid #e91e63;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    button {
+      padding: 1rem;
+      width: 100%;
+      font-size: 1rem;
+      background: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #d81b60;
+    }
+
+    #thumbnail {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      display: none;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #e91e63;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .ad-space {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #f2f2f2;
+      border: 2px dashed #aaa;
+      border-radius: 10px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 YouTube Thumbnail Downloader</h1>
+  <div class="container">
+    <input type="text" id="videoURL" placeholder="Paste YouTube Video URL here">
+    <button onclick="getThumbnail()">Get Thumbnail</button>
+
+    <div class="loader" id="loader"></div>
+    <div id="thumbnail">
+      <img id="thumbImg" alt="Thumbnail will appear here">
+    </div>
+  </div>
+
+  <div class="ad-space">
+    🚀 Your Ad Here – Start Earning with PropellerAds!
+  </div>
+
+  <script>
+    function getThumbnail() {
+      const url = document.getElementById('videoURL').value.trim();
+      const loader = document.getElementById('loader');
+      const img = document.getElementById('thumbImg');
+      const id = extractVideoID(url);
+
+      img.style.display = 'none';
+      loader.style.display = 'block';
+
+      if (id) {
+        setTimeout(() => {
+          const thumbUrl = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+          img.src = thumbUrl;
+          img.style.display = 'block';
+          loader.style.display = 'none';
+        }, 1000);
+      } else {
+        alert("Invalid YouTube URL");
+        loader.style.display = 'none';
+      }
+    }
+
+    function extractVideoID(url) {
+      const regex = /(?:v=|youtu\.be\/)([^&\n?#]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+  </script>
+</body>
+</html>
